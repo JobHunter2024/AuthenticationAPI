@@ -1,6 +1,7 @@
 package com.jobhunter24.AuthenticationAPI.api.service;
 
 import com.jobhunter24.AuthenticationAPI.api.dto.LoginDto;
+import com.jobhunter24.AuthenticationAPI.api.dto.RegisterDto;
 import com.jobhunter24.AuthenticationAPI.api.entity.User;
 import com.jobhunter24.AuthenticationAPI.api.exception.DuplicateEmailException;
 import com.jobhunter24.AuthenticationAPI.api.exception.DuplicateUsernameException;
@@ -103,7 +104,14 @@ public class UserServiceImpl implements IUserService {
     }
 
     @Override
-    public void registerUser(User user) {
+    public void registerUser(RegisterDto request) {
+        User user = User.builder()
+                .email(request.getEmail())
+                .role(User.Role.USER)
+                .username(request.getUsername())
+                .password(request.getPassword())
+                .build();
+
         user.setPassword(hashPassword(user.getPassword()));
 
         createUser(user);

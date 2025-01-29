@@ -2,6 +2,7 @@ package com.jobhunter24.AuthenticationAPI.api.controller;
 
 import com.jobhunter24.AuthenticationAPI.api.entity.User;
 import com.jobhunter24.AuthenticationAPI.api.service.IUserService;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -20,7 +21,7 @@ public class UserController {
 
     // Create User - POST /api/users
     @PostMapping
-    public ResponseEntity<User> createUser(@RequestBody User user) {
+    public ResponseEntity<User> createUser(@RequestBody @Valid User user) {
         User createdUser = userService.createUser(user);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdUser);
     }
@@ -42,7 +43,7 @@ public class UserController {
 
     // Update User - PUT /api/users/{id}
     @PutMapping("/{id}")
-    public ResponseEntity<User> updateUser(@PathVariable Long id, @RequestBody User user) {
+    public ResponseEntity<User> updateUser(@PathVariable Long id, @RequestBody @Valid User user) {
         User updatedUser = userService.updateUser(id, user);
 
         return ResponseEntity.ok(updatedUser); // HTTP 200
@@ -50,7 +51,7 @@ public class UserController {
 
     // Partially Update User - PATCH /api/users/{id}
     @PatchMapping("/{id}")
-    public ResponseEntity<User> patchUser(@PathVariable Long id, @RequestBody User user) {
+    public ResponseEntity<User> patchUser(@PathVariable Long id, @RequestBody @Valid User user) {
         User patchedUser = userService.patchUser(id, user);
 
         return ResponseEntity.ok(patchedUser); // HTTP 200

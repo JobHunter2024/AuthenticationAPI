@@ -1,7 +1,7 @@
 package com.jobhunter24.AuthenticationAPI.api.controller;
 
 import com.jobhunter24.AuthenticationAPI.api.dto.LoginDto;
-import com.jobhunter24.AuthenticationAPI.api.entity.User;
+import com.jobhunter24.AuthenticationAPI.api.dto.RegisterDto;
 import com.jobhunter24.AuthenticationAPI.api.service.IUserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,9 +21,8 @@ public class AuthenticationController {
 
     // Register User - POST /api/users/register
     @PostMapping("/register")
-    public ResponseEntity<Void> registerUser(@RequestBody User user) {
-        user.setRole(User.Role.USER);
-        userService.registerUser(user);
+    public ResponseEntity<Void> registerUser(@RequestBody RegisterDto request) {
+        userService.registerUser(request);
 
         return ResponseEntity.status(HttpStatus.CREATED).build(); // HTTP 201
     }

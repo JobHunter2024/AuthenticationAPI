@@ -1,6 +1,7 @@
 package com.jobhunter24.AuthenticationAPI.api.service;
 
 import com.jobhunter24.AuthenticationAPI.api.dto.LoginDto;
+import com.jobhunter24.AuthenticationAPI.api.dto.RegisterDto;
 import com.jobhunter24.AuthenticationAPI.api.entity.User;
 
 import java.util.List;
@@ -18,7 +19,7 @@ public interface IUserService {
 
     void deleteUser(Long id);
 
-    void registerUser(User user);
+    void registerUser(RegisterDto registerDto);
 
     String loginUser(LoginDto loginDto);
 }

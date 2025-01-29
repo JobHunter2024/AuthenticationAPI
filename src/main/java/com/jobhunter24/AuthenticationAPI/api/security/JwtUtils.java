@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.security.Key;
+import java.util.Base64;
 import java.util.Date;
 
 @Component
@@ -23,15 +24,18 @@ public class JwtUtils {
     private String issuer;
 
     public String generateToken(User user) {
-        // Create a signing key from the secret
-        Key key = Keys.hmacShaKeyFor(secretKey.getBytes());
+        // Decode the Base64-encoded secret key
+        Key key = Keys.hmacShaKeyFor(Base64.getDecoder().decode(secretKey));
 
-        // Use Jwts.builder() to construct the JWT
+        // Construct the JWT
         return Jwts.builder()
-                .subject(user.getUsername())
+                .setSubject(user.getUsername())
                 .claim("role", user.getRole())
-                .issuedAt(new Date())
-                .expiration(new Date((new Date()).getTime() + expirationTime))
+                .claim("id", user.getId())
+                .claim("username", user.getUsername())
+                .claim("email", user.getEmail())
+                .setIssuedAt(new Date())
+                .setExpiration(new Date((new Date()).getTime() + expirationTime))
                 .signWith(key)
                 .compact();
     }
